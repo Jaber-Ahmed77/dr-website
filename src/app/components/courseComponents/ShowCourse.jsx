@@ -191,15 +191,17 @@ export default function ShowCourse({ id, userSession, userData }) {
               className="cursor-pointer text-white"
             />
           </div>
+          <div className="flex justify-between items-center">
           <p className="text-center text-sm md:text-lg text-nowrap font-bold md:block flex justify-between items-center px-4">
             Lessons: {response?.data?.data?.length}{" "}
-            <span>
+          </p>
+          <div>
               <IoClose
                 className="md:hidden"
                 onClick={() => setSidebarOpen(false)}
               />
-            </span>
-          </p>
+            </div>
+          </div>
         </div>
         <div className="flex flex-col gap-3 mt-4 items-center">
           {response?.data?.data?.map((course) => (
