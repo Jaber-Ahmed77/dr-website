@@ -1,7 +1,7 @@
-import { signOut } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 import LogoutBtn from "./LogoutBtn";
+import { FaArrowLeft } from "react-icons/fa6";
 
 export default function Sidenav() {
   const links = [
@@ -20,6 +20,11 @@ export default function Sidenav() {
   return (
     <aside className="bg-zinc-800 fixed w-1/5 h-screen text-white flex flex-col items-center justify-between pb-4 ">
       <div className="flex flex-col items-center w-full">
+        <div className="w-full flex items-center">
+          <Link href={"/"} className="w-fit p-2 z-50">
+            <FaArrowLeft size={25} className="cursor-pointer text-white" />
+          </Link>
+        </div>
         <div className="mt-5">Logo</div>
 
         <div className="w-full">

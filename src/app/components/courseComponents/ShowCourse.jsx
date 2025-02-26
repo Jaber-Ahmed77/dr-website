@@ -135,8 +135,8 @@ export default function ShowCourse({ id, userSession, userData }) {
         <div className="ml-auto bg-gray-100 w-full text-black">
           <div className="md:w-4/5 w-5/6 max-w-[1500px] mx-auto h-full pt-5">
             <div className="mb-5">
-              <p className="text-center md:text-xl text-lg font-bold">
-                Purchase this course to access the content
+              <p className="text-center text-green-500 md:text-xl text-lg font-bold">
+                Purchase this course to access the content for 3 months.
               </p>
             </div>
             <div className="w-full flex flex-col md:flex-row mt-10 gap-6">

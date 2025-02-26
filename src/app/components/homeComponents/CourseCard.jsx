@@ -5,9 +5,14 @@ import { BsFillClockFill } from "react-icons/bs";
 import { FaBook } from "react-icons/fa";
 import UpdateCoursePrice from "../../forms/UpdateCoursePrice";
 
-export default function CourseCard({ course, role }) {
+export default function CourseCard({ course, role, dateDistance }) {
   return (
     <div className="shadow-lg rounded-2xl hover:shadow-2xl hover:-translate-y-1 transition-all overflow-clip flex flex-col">
+      {
+        dateDistance && (
+          <p className="text-sm md:text-base text-slate-600 px-4 py-2"  >Course exp in: <span>{dateDistance} / 3 months</span></p>
+        )
+      }
       <div className="w-full h-[210px] overflow-clip">
         <Image
           src={
@@ -40,7 +45,7 @@ export default function CourseCard({ course, role }) {
               </div>
               <div className="flex gap-1 items-center">
                 {" "}
-                <FaBook color="#2196f3" /> 20 Lessons
+                <FaBook color="#2196f3" /> {course?.count} Lessons
               </div>
             </div>
             <div>
