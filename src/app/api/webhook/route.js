@@ -41,8 +41,6 @@ export async function POST(req) {
     const newOrder = new Order({ userId, courseId, status: "completed" });
     await newOrder.save();
 
-    console.log("📦 Course ID:", newOrder, userId);
-
     return NextResponse.json({
       success: true,
       message: "Payment completed successfully",

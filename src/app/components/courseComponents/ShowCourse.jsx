@@ -190,6 +190,32 @@ export default function ShowCourse({ id, userSession, userData }) {
             </span>
           </p>
         </div>
+        <div className="flex flex-col gap-3 mt-4 items-center">
+            {response?.data?.data?.map((course) => (
+              <div
+                key={course?.id}
+                className="w-11/12 rounded-lg p-3 bg-white cursor-pointer text-black"
+                onClick={() => setVideo(course)}
+              >
+                <div className="mb-2 font-semibold">
+                  {course?.snippet?.title}
+                </div>
+                <Image
+                  src={
+                    course?.snippet?.thumbnails?.default?.url.includes(
+                      "no_thumbnail"
+                    ) || Object.keys(course?.snippet?.thumbnails)
+                      ? "/course.jpg"
+                      : course?.snippet?.thumbnails?.default?.url
+                  }
+                  alt={course?.snippet?.title}
+                  width={300}
+                  height={200}
+                  className="w-full rounded"
+                />
+              </div>
+            ))}
+          </div>
       </div>
 
       <div className="ml-auto bg-gray-100 md:w-4/5 w-full text-black">
