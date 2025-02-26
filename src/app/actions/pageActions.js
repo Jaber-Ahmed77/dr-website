@@ -32,26 +32,33 @@ export async function updateCourses() {
 
     const storedCourses = await Course.find(
       {},
-      "playlistId title description thumbnail"
+      "playlistId title description thumbnail count"
     );
 
     let addedCount = 0;
     let updatedCount = 0;
+    let videosCount = 0;
 
     for (const playlist of youtubePlaylists) {
       const existingCourse = storedCourses.find(
         (course) => course.playlistId === playlist.id
       );
 
-      console.log(
-        "playlist course",
-        existingCourse.title,
-        playlist.snippet.title,
-        existingCourse.description,
-        playlist.snippet.description,
-        existingCourse.thumbnail,
-        playlist.snippet.thumbnails.medium.url
+      const response2 = await axios.get(
+        `https://www.googleapis.com/youtube/v3/playlistItems?part=id&playlistId=${playlist.id}&key=${API_KEY}&maxResults=1`
       );
+      
+      const totalVideos = response2.data.pageInfo.totalResults;
+      
+      console.log("totalVideos", totalVideos);
+      
+      if (existingCourse.count !== totalVideos) {
+        await Course.updateOne(
+          { playlistId: playlist.id },
+          { $set: { count: totalVideos } }
+        );
+        videosCount++;
+      }
 
       if (existingCourse) {
         if (
@@ -85,7 +92,7 @@ export async function updateCourses() {
 
     return {
       success: true,
-      message: `✅ ${addedCount} new courses added, 🔄 ${updatedCount} courses updated.`,
+      message: `✅ ${addedCount} new courses added, 🔄 ${updatedCount} courses updated, 🔄 ${videosCount} videos count updated`,
     };
   } catch (error) {
     console.log(error);

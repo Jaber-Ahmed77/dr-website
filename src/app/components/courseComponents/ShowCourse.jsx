@@ -50,6 +50,7 @@ export default function ShowCourse({ id, userSession, userData }) {
         }
       } else {
         toast.error("Network error or request failed:", error.message);
+        setLoading(false);
       }
     }
   };
@@ -87,21 +88,6 @@ export default function ShowCourse({ id, userSession, userData }) {
     }
   }, []);
 
-  // ⬇️ Show Loading Skeleton While Fetching Data
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen bg-gray-100">
-        <div className="w-4/5">
-          <div className="animate-pulse space-y-6">
-            <div className="h-6 bg-gray-300 rounded w-2/5 mx-auto"></div>
-            <div className="h-4 bg-gray-300 rounded w-3/5 mx-auto"></div>
-            <div className="h-80 bg-gray-300 rounded w-full"></div>
-            <div className="h-4 bg-gray-300 rounded w-4/5 mx-auto"></div>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   // ⬇️ Render Content After Loading
   if (!userSession) {
@@ -125,6 +111,23 @@ export default function ShowCourse({ id, userSession, userData }) {
       </main>
     );
   }
+
+    // ⬇️ Show Loading Skeleton While Fetching Data
+    if (loading) {
+      return (
+        <div className="flex justify-center items-center min-h-screen bg-gray-100">
+          <div className="w-4/5">
+            <div className="animate-pulse space-y-6">
+              <div className="h-6 bg-gray-300 rounded w-2/5 mx-auto"></div>
+              <div className="h-4 bg-gray-300 rounded w-3/5 mx-auto"></div>
+              <div className="h-80 bg-gray-300 rounded w-full"></div>
+              <div className="h-4 bg-gray-300 rounded w-4/5 mx-auto"></div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+  
 
   if (response?.data?.success === false) {
     return (
