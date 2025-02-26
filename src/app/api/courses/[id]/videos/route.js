@@ -33,8 +33,7 @@ export async function GET(req, { params }) {
   }
 
   const now = Date.now();
-  // const expData = addMonths(hasPurchased.createdAt, +3)
-  const expData = addMinutes(hasPurchased.createdAt, +3)
+  const expData = addMonths(hasPurchased.createdAt, +3)
 
   if (now >= expData) {
     await Order.updateOne({ _id: hasPurchased._id }, { status: "expired" });
