@@ -28,9 +28,9 @@ export async function POST(req) {
     }
     
     // Update course access
-    const updatedCourse = await Course.updateOne({ _id: courseId }, { $set: { isPaid: "newPrice" } });
+    const updatedCourse = await Course.findById({ _id: courseId });
 
-    console.log("📦 Course ID:", courseId);
+    console.log("📦 Course ID:", updatedCourse);
     
     return NextResponse.json({ success: true, message: "Payment completed successfully" });
 
