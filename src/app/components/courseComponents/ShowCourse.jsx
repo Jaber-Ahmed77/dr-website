@@ -15,6 +15,32 @@ export default function ShowCourse({ id, userSession, userData }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [loading, setLoading] = useState(true); // ⬅️ Added loading state
 
+  const buyCourse = async () => {
+    try {
+      const response = await axios.post("/api/orders", {
+        amount: courseData.price,
+        courseId: id,
+        userData: { ...userData, email: userSession?.email },
+        userId: userSession?.id,
+      });
+      toast.success(response.data.message);
+      window.open(response.data.data)
+      // return response;
+    } catch (error) {
+      console.log(error);
+      if (error.response) {
+        // If the error has a response, check the status code
+        if (error.response.status === 403) {
+          toast.error(error.response.data.message);
+        } else {
+          toast.error(error.response.status, error.response.data);
+        }
+      } else {
+        toast.error("Network error or request failed:", error.message);
+      }
+    }
+  };
+
   useEffect(() => {
     const fetchCourse = async () => {
       try {
@@ -131,6 +157,7 @@ export default function ShowCourse({ id, userSession, userData }) {
                 </div>
                 <div>
                   <button
+                    onClick={buyCourse}
                     type="button"
                     className="border w-full rounded-lg py-2 transition-all shadow-md hover:shadow-xl text-white bg-[#2196f3] hover:bg-blue-600"
                   >
