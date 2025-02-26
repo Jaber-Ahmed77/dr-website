@@ -175,8 +175,8 @@ export default function ShowCourse({ id, userSession, userData }) {
 
   return (
     <div className="text-white min-h-screen flex relative">
-      <div className="fixed top-4 left-4 w-full h-full z-50">
-        <FaArrowLeft />
+      <div className="absolute top-4 left-4 w-full z-50">
+        <FaArrowLeft onClick={() => router.back()} size={30} className="cursor-pointer text-black"/>
       </div>
       <div
         className={`w-full md:w-1/5 md:fixed z-50 absolute transition-all ${
