@@ -184,14 +184,14 @@ export default function ShowCourse({ id, userSession, userData }) {
         } h-screen overflow-y-auto bg-[#2196f3] py-4`}
       >
         <div className="flex justify-between items-center text-bold">
-          <div className="absolute top-4 left-4 w-fit p-2 z-50">
+          <div className="w-fit p-2 z-50">
             <FaArrowLeft
               onClick={() => router.back()}
               size={25}
               className="cursor-pointer text-black"
             />
           </div>
-          <p className="text-center text-lg font-bold md:block flex justify-between items-center px-4">
+          <p className="text-center text-sm md:text-lg text-nowrap font-bold md:block flex justify-between items-center px-4">
             Lessons: {response?.data?.data?.length}{" "}
             <span>
               <IoClose
@@ -230,6 +230,17 @@ export default function ShowCourse({ id, userSession, userData }) {
       </div>
 
       <div className="ml-auto bg-gray-100 md:w-4/5 w-full text-black">
+      {
+        !sidebarOpen && (
+          <div className="w-fit p-2 z-50">
+          <FaArrowLeft
+            onClick={() => router.back()}
+            size={25}
+            className="cursor-pointer text-black"
+          />
+        </div>
+        )
+      }
         <div className="md:w-4/5 w-5/6 max-w-[1500px] mx-auto h-full pt-5">
           <div className="mb-5 block md:hidden">
             <button type="button">
