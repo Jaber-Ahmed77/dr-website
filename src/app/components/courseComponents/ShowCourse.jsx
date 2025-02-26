@@ -204,7 +204,7 @@ export default function ShowCourse({ id, userSession, userData }) {
                   src={
                     course?.snippet?.thumbnails?.default?.url.includes(
                       "no_thumbnail"
-                    ) || Object.keys(course?.snippet?.thumbnails)
+                    ) || Object.keys(course?.snippet?.thumbnails).length === 0
                       ? "/course.jpg"
                       : course?.snippet?.thumbnails?.default?.url
                   }
