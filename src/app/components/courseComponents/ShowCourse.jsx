@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import FormWrapper from "../passwordComponents/FormWrapper";
 import { IoClose, IoMenu } from "react-icons/io5";
 import { FaArrowLeft } from "react-icons/fa6";
+import { useRouter } from "next/navigation";
 
 export default function ShowCourse({ id, userSession, userData }) {
   const [response, setResponse] = useState();
@@ -15,6 +16,8 @@ export default function ShowCourse({ id, userSession, userData }) {
   const [courseData, setCourseData] = useState({});
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [loading, setLoading] = useState(true); // ⬅️ Added loading state
+
+  const router = useRouter();
 
   const buyCourse = async () => {
     try {
@@ -175,11 +178,11 @@ export default function ShowCourse({ id, userSession, userData }) {
 
   return (
     <div className="text-white min-h-screen flex relative">
-      <div className="absolute top-4 left-4 w-full z-50">
-        <FaArrowLeft onClick={() => router.back()} size={30} className="cursor-pointer text-black"/>
+      <div className="absolute top-4 left-4 w-fit p-2 z-50">
+        <FaArrowLeft onClick={() => router.back()} size={25} className="cursor-pointer text-black"/>
       </div>
       <div
-        className={`w-full md:w-1/5 md:fixed z-50 absolute transition-all ${
+        className={`w-full md:w-1/5 md:fixed z-40 absolute transition-all ${
           sidebarOpen ? "top-0 left-0" : "top-0 -left-full md:left-0"
         } h-screen overflow-y-auto bg-[#2196f3] py-4`}
       >
