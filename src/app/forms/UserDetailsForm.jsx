@@ -19,14 +19,14 @@ export const UserDetailsForm = ({ userData, email }) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      first_name: userData?.first_name || "N/A",
-      last_name: userData?.last_name || "N/A",
-      phone_number: userData?.phone_number || "N/A",
-      street: userData?.street || "Unknown",
-      building: userData?.building || "Unknown",
-      floor: userData?.floor || "Unknown",
-      apartment: userData?.apartment || "Unknown",
-      city: userData?.city || "Unknown",
+      first_name: userData?.first_name || "",
+      last_name: userData?.last_name || "",
+      phone_number: userData?.phone_number || "",
+      street: userData?.street || "",
+      building: userData?.building || "",
+      floor: userData?.floor || "",
+      apartment: userData?.apartment || "",
+      city: userData?.city || "",
       country: userData?.country || "EG",
     },
   });
