@@ -26,13 +26,14 @@ export default async function RootLayout({ children }) {
 
   return (
     <html lang="en" className="scroll-smooth">
+    <head>
+    <meta http-equiv="refresh" content={`3;url=/courses/${courseId}`} />
+  </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Navbar session={session} />
 
         <main className="">{children}</main>
-        <Footer />
       </body>
     </html>
   );

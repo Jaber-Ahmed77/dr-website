@@ -6,11 +6,7 @@ export default async function PaymentResult({ searchParams }) {
 
 
   return (
-    <html>
-      <head>
-        <meta http-equiv="refresh" content={`3;url=/courses/${courseId}`} />
-      </head>
-      <body>
+
         <div className="text-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full">
           <h1 className="text-4xl font-bold">Payment Result</h1>
           {params.success === "true" && params.error_occured === "false" ? (
@@ -30,7 +26,5 @@ export default async function PaymentResult({ searchParams }) {
             </div>
           )}
         </div>
-      </body>
-    </html>
   );
 }
