@@ -97,7 +97,7 @@ async function getPaymentKey(token, orderId, amount, userData) {
       },
       currency: "EGP",
       integration_id: PAYMOB_INTEGRATION_ID, // Your Paymob integration ID
-      redirect_url: "https://381d-197-58-236-33.ngrok-free.app/paymentResult",
+      redirect_url: "https://dr-website-kappa.vercel.app/paymentResult",
     });
 
     console.log("✅ Payment Key Generated Successfully:", response.data.token);
