@@ -188,7 +188,7 @@ export default function ShowCourse({ id, userSession, userData }) {
             <FaArrowLeft
               onClick={() => router.back()}
               size={25}
-              className="cursor-pointer text-black"
+              className="cursor-pointer text-white"
             />
           </div>
           <p className="text-center text-sm md:text-lg text-nowrap font-bold md:block flex justify-between items-center px-4">
@@ -231,7 +231,7 @@ export default function ShowCourse({ id, userSession, userData }) {
 
       <div className="ml-auto bg-gray-100 md:w-4/5 w-full text-black">
       {
-        !sidebarOpen && (
+        sidebarOpen && (
           <div className="w-fit p-2 z-50">
           <FaArrowLeft
             onClick={() => router.back()}
