@@ -28,7 +28,7 @@ export default function ShowCourse({ id, userSession, userData }) {
         userId: userSession?.id,
       });
       toast.success(response.data.message);
-      window.open(response.data.data)
+      window.open(response.data.data);
       // return response;
     } catch (error) {
       console.log(error);
@@ -178,15 +178,19 @@ export default function ShowCourse({ id, userSession, userData }) {
 
   return (
     <div className="text-white min-h-screen flex relative">
-      <div className="absolute top-4 left-4 w-fit p-2 z-50">
-        <FaArrowLeft onClick={() => router.back()} size={25} className="cursor-pointer text-black"/>
-      </div>
       <div
         className={`w-full md:w-1/5 md:fixed z-40 absolute transition-all ${
           sidebarOpen ? "top-0 left-0" : "top-0 -left-full md:left-0"
         } h-screen overflow-y-auto bg-[#2196f3] py-4`}
       >
-        <div className="text-bold">
+        <div className="flex justify-between items-center text-bold">
+          <div className="absolute top-4 left-4 w-fit p-2 z-50">
+            <FaArrowLeft
+              onClick={() => router.back()}
+              size={25}
+              className="cursor-pointer text-black"
+            />
+          </div>
           <p className="text-center text-lg font-bold md:block flex justify-between items-center px-4">
             Lessons: {response?.data?.data?.length}{" "}
             <span>
@@ -198,45 +202,50 @@ export default function ShowCourse({ id, userSession, userData }) {
           </p>
         </div>
         <div className="flex flex-col gap-3 mt-4 items-center">
-            {response?.data?.data?.map((course) => (
-              <div
-                key={course?.id}
-                className={`w-11/12 rounded-lg p-3 ${course?.id  === video?.id ? "bg-[#a0daff]" : "bg-white"} cursor-pointer text-black`}
-                onClick={() => setVideo(course)}
-              >
-                <div className="mb-2 font-semibold">
-                  {course?.snippet?.title}
-                </div>
-                <Image
-                  src={
-                    course?.snippet?.thumbnails?.default?.url.includes(
-                      "no_thumbnail"
-                    ) || Object.keys(course?.snippet?.thumbnails).length === 0
-                      ? "/course.jpg"
-                      : course?.snippet?.thumbnails?.default?.url
-                  }
-                  alt={course?.snippet?.title}
-                  width={300}
-                  height={200}
-                  className="w-full rounded"
-                />
-              </div>
-            ))}
-          </div>
+          {response?.data?.data?.map((course) => (
+            <div
+              key={course?.id}
+              className={`w-11/12 rounded-lg p-3 ${
+                course?.id === video?.id ? "bg-[#a0daff]" : "bg-white"
+              } cursor-pointer text-black`}
+              onClick={() => setVideo(course)}
+            >
+              <div className="mb-2 font-semibold">{course?.snippet?.title}</div>
+              <Image
+                src={
+                  course?.snippet?.thumbnails?.default?.url.includes(
+                    "no_thumbnail"
+                  ) || Object.keys(course?.snippet?.thumbnails).length === 0
+                    ? "/course.jpg"
+                    : course?.snippet?.thumbnails?.default?.url
+                }
+                alt={course?.snippet?.title}
+                width={300}
+                height={200}
+                className="w-full rounded"
+              />
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="ml-auto bg-gray-100 md:w-4/5 w-full text-black">
         <div className="md:w-4/5 w-5/6 max-w-[1500px] mx-auto h-full pt-5">
           <div className="mb-5 block md:hidden">
             <button type="button">
-              <IoMenu className="md:hidden" onClick={() => setSidebarOpen(true)} />
+              <IoMenu
+                className="md:hidden"
+                onClick={() => setSidebarOpen(true)}
+              />
             </button>
           </div>
 
           {Object.keys(video).length ? (
             <>
               <div className="flex flex-col gap-3">
-                <h2 className="text-lg font font-semibold">{video?.snippet?.title}</h2>
+                <h2 className="text-lg font font-semibold">
+                  {video?.snippet?.title}
+                </h2>
                 <p className="text-gray-600 break-words">
                   {video?.snippet?.description || "No Description"}
                 </p>
