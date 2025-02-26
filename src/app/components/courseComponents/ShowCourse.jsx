@@ -183,7 +183,7 @@ export default function ShowCourse({ id, userSession, userData }) {
           sidebarOpen ? "top-0 left-0" : "top-0 -left-full md:left-0"
         } h-screen overflow-y-auto bg-[#2196f3] py-4`}
       >
-        <div className="flex justify-between items-center text-bold">
+        <div className="flex items-center text-bold">
           <div className="w-fit p-2 z-50">
             <FaArrowLeft
               onClick={() => router.back()}
@@ -230,17 +230,15 @@ export default function ShowCourse({ id, userSession, userData }) {
       </div>
 
       <div className="ml-auto bg-gray-100 md:w-4/5 w-full text-black">
-      {
-        sidebarOpen && (
-          <div className="w-fit p-2 z-50">
+     
+          <div className="w-fit p-2 z-50 block md:hidden">
           <FaArrowLeft
             onClick={() => router.back()}
             size={25}
             className="cursor-pointer text-black"
           />
         </div>
-        )
-      }
+     
         <div className="md:w-4/5 w-5/6 max-w-[1500px] mx-auto h-full pt-5">
           <div className="mb-5 block md:hidden">
             <button type="button">
