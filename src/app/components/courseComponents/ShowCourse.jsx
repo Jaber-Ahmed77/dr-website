@@ -194,7 +194,7 @@ export default function ShowCourse({ id, userSession, userData }) {
             {response?.data?.data?.map((course) => (
               <div
                 key={course?.id}
-                className="w-11/12 rounded-lg p-3 bg-white cursor-pointer text-black"
+                className={`w-11/12 rounded-lg p-3 ${course?.id  === video?.id ? "bg-white text-black" : "bg-[#2196f3]"} cursor-pointer text-black`}
                 onClick={() => setVideo(course)}
               >
                 <div className="mb-2 font-semibold">
