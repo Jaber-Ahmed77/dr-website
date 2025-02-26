@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
-import connectToDatabase from "@/libs/connectToDb";
 import Course from "@/models/Course";
+import connectToDatabase from "../../lib/connectToDb";
 
 export async function POST(req) {
-  await connectToDatabase(); // Ensure DB connection
+  await connectToDatabase();
 
   try {
-    const body = await req.json(); // Parse JSON request body
+    const body = await req.json();
     const { obj } = body;
 
     console.log("📦 Paymob Webhook Payload:", obj);
