@@ -18,20 +18,22 @@ export default async function Dashboard() {
   let currentCourses = [];
 
   if (session?.user?.role === "admin") {
-    const result = await Course.aggregate([
-      {
-        $group: {
-          _id: null,
-          totalCount: { $sum: "$count" },
-          totalCourses: { $sum: 1 },
+    const [courseStats, usersCount, orderCount] = await Promise.all([
+      Course.aggregate([
+        {
+          $group: {
+            _id: null,
+            totalCount: { $sum: "$count" },
+            totalCourses: { $sum: 1 },
+          },
         },
-      },
+      ]),
+      User.countDocuments().exec(),
+      Order.countDocuments().exec(),
     ]);
-
-    const usersCount = await User.countDocuments({}).exec();
-    const orderCount = await Order.countDocuments({}).exec();
-    const totalVideosCount = result[0]?.totalCount || 0;
-    const totalCourses = result[0]?.totalCourses || 0;
+    
+    const totalVideosCount = courseStats[0]?.totalCount || 0;
+    const totalCourses = courseStats[0]?.totalCourses || 0;
 
     tabsData.push(
       {
@@ -56,19 +58,22 @@ export default async function Dashboard() {
       }
     );
   } else {
-    const orders = await Order.find(
+    const ordersPromise = Order.find(
       { userId: session?.user?.id, status: "completed" },
       "courseId createdAt"
     )
       .populate("courseId", "title price thumbnail count")
       .exec();
-    currentCourses = orders;
-
+    
+    const [orders] = await Promise.all([ordersPromise]);
+    
     const ordersCount = orders.length;
     const totalVideosCount = orders.reduce((total, order) => {
-      return total + order.courseId.count;
+      return total + (order.courseId?.count || 0);
     }, 0);
-
+    
+    currentCourses = orders;
+    
     tabsData.push(
       {
         id: 1,

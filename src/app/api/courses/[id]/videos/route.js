@@ -3,7 +3,7 @@ import axios from "axios";
 import Order from "@/src/app/models/Order";
 import Course from "@/src/app/models/Course";
 import connectToDatabase from "@/src/app/lib/connectToDb";
-import { addMinutes, addMonths } from "date-fns";
+import { addMonths } from "date-fns";
 // import Order from "@/models/Order";
 // import connectToDatabase from "@/libs/connectToDb";
 // import Course from "@/models/Course";
