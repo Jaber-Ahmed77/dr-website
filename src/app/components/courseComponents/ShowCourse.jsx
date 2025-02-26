@@ -19,7 +19,16 @@ export default function ShowCourse({ id, userSession, userData }) {
 
   const router = useRouter();
 
+  console.log("userData", userData);
+  
+
   const buyCourse = async () => {
+
+    if(!userData){
+      router.push("/dashboard/settings");
+      return;
+    }
+
     try {
       const response = await axios.post("/api/orders", {
         amount: courseData.price,
@@ -195,7 +204,7 @@ export default function ShowCourse({ id, userSession, userData }) {
           <p className="text-center text-sm md:text-lg text-nowrap font-bold md:block flex justify-between items-center px-4">
             Lessons: {response?.data?.data?.length}{" "}
           </p>
-          <div className="px-4">
+          <div className="px-4 cursor-pointer">
               <IoClose
                 className="md:hidden"
                 onClick={() => setSidebarOpen(false)}

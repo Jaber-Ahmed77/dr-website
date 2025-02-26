@@ -8,6 +8,10 @@ import toast from "react-hot-toast";
 export const UserDetailsForm = ({ userData, email }) => {
   const [loading, setLoading] = useState(false);
 
+  if(!userData) {
+    toast.error("Thank you for your interest, Please complete your information first.");
+  }
+
   const {
     register,
     handleSubmit,
