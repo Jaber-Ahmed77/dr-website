@@ -191,11 +191,11 @@ export default function ShowCourse({ id, userSession, userData }) {
               className="cursor-pointer text-white"
             />
           </div>
-          <div className="flex justify-between items-center">
+          <div className="w-full flex justify-between items-center">
           <p className="text-center text-sm md:text-lg text-nowrap font-bold md:block flex justify-between items-center px-4">
             Lessons: {response?.data?.data?.length}{" "}
           </p>
-          <div>
+          <div className="px-4">
               <IoClose
                 className="md:hidden"
                 onClick={() => setSidebarOpen(false)}
