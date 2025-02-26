@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import FormWrapper from "../passwordComponents/FormWrapper";
 import { IoClose, IoMenu } from "react-icons/io5";
+import { FaArrowLeft } from "react-icons/fa6";
 
 export default function ShowCourse({ id, userSession, userData }) {
   const [response, setResponse] = useState();
@@ -174,6 +175,9 @@ export default function ShowCourse({ id, userSession, userData }) {
 
   return (
     <div className="text-white min-h-screen flex relative">
+      <div className="fixed top-4 left-4 w-full h-full z-50">
+        <FaArrowLeft />
+      </div>
       <div
         className={`w-full md:w-1/5 md:fixed z-50 absolute transition-all ${
           sidebarOpen ? "top-0 left-0" : "top-0 -left-full md:left-0"
