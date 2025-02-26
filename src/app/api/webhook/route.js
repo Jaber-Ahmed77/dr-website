@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import connectToDatabase from "../../lib/connectToDb";
-import Course from "../../models/Course";
+import Order from "../../models/Order";
 
 export async function POST(req) {
   await connectToDatabase();
@@ -12,34 +12,49 @@ export async function POST(req) {
     console.log("📦 Paymob Webhook Payload:", obj);
 
     if (!obj) {
-      return NextResponse.json({ error: "Invalid webhook payload" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Invalid webhook payload" },
+        { status: 400 }
+      );
     }
 
     if (!obj.success) {
-      return NextResponse.json({ success: false, message: obj.data.message || "Payment failed" }, { status: 400 });
+      return NextResponse.json(
+        { success: false, message: obj.data.message || "Payment failed" },
+        { status: 400 }
+      );
     }
 
     const { order } = obj;
     const merchantOrderId = order?.merchant_order_id;
     const courseId = merchantOrderId.split("-")[0];
+    const userId = merchantOrderId.split("-")[1];
 
     if (!courseId) {
-      return NextResponse.json({ error: "Missing course ID in webhook" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Missing course ID in webhook" },
+        { status: 400 }
+      );
     }
-    
+
     // Update course access
-    const updatedCourse = await Course.findById({ _id: courseId });
+    const newOrder = new Order({ userId, courseId, status: "completed" });
+    await newOrder.save();
 
-    console.log("📦 Course ID:", updatedCourse);
-    
-    return NextResponse.json({ success: true, message: "Payment completed successfully" });
+    console.log("📦 Course ID:", newOrder, userId);
 
+    return NextResponse.json({
+      success: true,
+      message: "Payment completed successfully",
+    });
   } catch (error) {
     console.error("❌ Paymob Webhook Error:", error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
   }
 }
-
 
 //   const { userId, courseId } = await req.json();
 //  try {
