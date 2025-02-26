@@ -10,8 +10,6 @@ export default async function Home() {
 
   const session = await getServerSession(authOptions);
 
-  console.log(session);
-
   return (
     <div className="">
       <HeroSection />

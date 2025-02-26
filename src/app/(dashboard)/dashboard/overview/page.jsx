@@ -8,7 +8,6 @@ import Course from "@/src/app/models/Course";
 import { User } from "@/src/app/models/User";
 import Order from "@/src/app/models/Order";
 import CourseCard from "@/src/app/components/homeComponents/CourseCard";
-import Login from "@/src/app/(password)/login/page";
 import { formatDistanceToNow } from "date-fns";
 
 export default async function Dashboard() {
@@ -23,8 +22,8 @@ export default async function Dashboard() {
       {
         $group: {
           _id: null,
-          totalCount: { $sum: "$count" }, // Sum of `count` field
-          totalCourses: { $sum: 1 }, // Count of documents
+          totalCount: { $sum: "$count" },
+          totalCourses: { $sum: 1 },
         },
       },
     ]);

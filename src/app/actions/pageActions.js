@@ -49,9 +49,7 @@ export async function updateCourses() {
       );
       
       const totalVideos = response2.data.pageInfo.totalResults;
-      
-      console.log("totalVideos", totalVideos);
-      
+            
       if (existingCourse.count !== totalVideos) {
         await Course.updateOne(
           { playlistId: playlist.id },
@@ -190,8 +188,6 @@ export async function updateUserData(email, userData) {
     const updatedUser = await db
       .collection("users")
       .updateOne({ email }, { $set: { userData: userData } });
-
-    console.log("Updated user:", updatedUser);
 
     if (updatedUser.matchedCount === 0) {
       return { success: false, message: "User not found" };

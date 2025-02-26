@@ -19,9 +19,6 @@ export default function ShowCourse({ id, userSession, userData }) {
 
   const router = useRouter();
 
-  console.log("userData", userData);
-  
-
   const buyCourse = async () => {
 
     if(!userData){

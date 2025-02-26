@@ -11,8 +11,6 @@ export default async function Settings() {
 
   const userData = await User.findById({ _id: session.user.id }, "userData").lean();
 
-  console.log(userData);
-
   return (
     <div>
       <div>
