@@ -1,17 +1,13 @@
-import mongoose, { Schema, model, models } from "mongoose";
+import mongoose from "mongoose";
 
-const CourseSchema = new Schema({
+const CourseSchema = new mongoose.Schema({
   playlistId: { type: String, required: true, unique: true },
   title: { type: String, required: true },
   description: { type: String },
   price: { type: Number, required: true },
-  count: { type: Number, default: 0 }, // Default to 0 to avoid undefined
+  count: { type: Number },
   thumbnail: { type: String },
 });
 
-// Index for fast lookup by playlistId
-CourseSchema.index({ playlistId: 1 });
-// Optional: Index count if you frequently aggregate total videos
 CourseSchema.index({ count: 1 });
-
-export default models.Course || model("Course", CourseSchema);
+export default mongoose.models.Course || mongoose.model("Course", CourseSchema);
