@@ -43,8 +43,7 @@ export default async function Dashboard() {
       {session?.user?.role === "admin" ? (
         <AdminAnalyticsSection session={session} />
       ) : (
-        // <UserAnalyticsSection session={session} />
-        <div className="">ssss</div>
+        <UserAnalyticsSection session={session} />
       )}
     </div>
   );

@@ -2,16 +2,17 @@
 import { useEffect, useState } from "react";
 import DataCards from "./DataCards";
 import toast from "react-hot-toast";
-import { getUserAnalytics } from "../../actions/pageActions";
 import CourseCard from "../homeComponents/CourseCard";
 import { formatDistanceToNow } from "date-fns";
 
-export default function UserAnalyticsSection({session}) {
+export default function UserAnalyticsSection({ session }) {
   const [data, setData] = useState({});
   
   const getData = async () => {
     try {
-      const res = await getUserAnalytics(session?.user?.id);
+      const response = await fetch(`/api/getUserAnalytics?id=${session?.user?.id}`);
+      if (!response.ok) throw new Error("Failed to fetch analytics data");
+      const res = await response.json();
       setData(res);
     } catch (error) {
       toast.error(error.message);
@@ -24,7 +25,6 @@ export default function UserAnalyticsSection({session}) {
 
   console.log("orders", data?.orders);
   
-
   return (
     <>
       <div className="mt-10 grid grid-cols-4 gap-8">
@@ -35,7 +35,7 @@ export default function UserAnalyticsSection({session}) {
       {session?.user?.role === "user" && (
         <div className="mt-10 bg-white shadow-lg p-8 rounded-xl">
           <h4 className="text-xl mb-2 font-semibold text-gray-800">
-            our courses
+            Our Courses
           </h4>
           {data?.orders?.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-20">
