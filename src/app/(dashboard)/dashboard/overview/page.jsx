@@ -93,7 +93,7 @@ export default async function Dashboard() {
         </div>
       )}
 
-      {/* <UserAnalyticsSection session={session}/> */}
+      <UserAnalyticsSection session={session}/>
 
     </div>
   );

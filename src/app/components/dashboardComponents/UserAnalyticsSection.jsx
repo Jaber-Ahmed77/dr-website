@@ -4,6 +4,7 @@ import DataCards from "./DataCards";
 import toast from "react-hot-toast";
 import { getUserAnalytics } from "../../actions/pageActions";
 import CourseCard from "../homeComponents/CourseCard";
+import { formatDistanceToNow } from "date-fns";
 
 export default function UserAnalyticsSection({session}) {
   const [data, setData] = useState({});
