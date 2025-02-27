@@ -12,13 +12,14 @@ export async function GET(req) {
     
     if (!id) return NextResponse.json({ success: false, error: "User ID is required" }, { status: 400 });
 
-    const orders = await Order.find({ userId: id, status: "completed" }, "courseId createdAt")
+    const orders = await Order.find({ userId: id, status: "completed" }, "courseId _id createdAt")
       .populate("courseId", "title price thumbnail count")
-      .exec();
+      .exec();      
 
     const simplifiedOrders = orders.map((order) => ({
       courseId: order.courseId
         ? {
+            _id: order.courseId._id,
             title: order.courseId.title,
             price: order.courseId.price,
             thumbnail: order.courseId.thumbnail,
