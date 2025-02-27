@@ -8,7 +8,7 @@ export default async function UserAnalyticsSection({ session }) {
   }
 
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getUserAnalytics?id=${session.user.id}`, {
+    const response = await fetch(`${process.env.BASE_URL}/api/getUserAnalytics?id=${session.user.id}`, {
       cache: "no-store",
     });
 
