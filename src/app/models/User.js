@@ -1,12 +1,16 @@
-import {model, models, Schema} from "mongoose";
+import mongoose, { Schema, model, models } from "mongoose";
 
-const UserSchema = new Schema({
-  name: String,
-  email: String,
-  image: String,
-  role: { type: String, default: "user" },
-}, {
-  timestamps: true
-});
+const UserSchema = new Schema(
+  {
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    image: { type: String },
+    role: { type: String, default: "user" },
+  },
+  { timestamps: true }
+);
 
-export const User = models?.User || model('User', UserSchema);
+// Index email for faster lookup (important if you authenticate via email)
+UserSchema.index({ email: 1 });
+
+export default models.User || model("User", UserSchema);

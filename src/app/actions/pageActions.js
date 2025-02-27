@@ -279,8 +279,8 @@ export async function getAdminAnalytics() {
           },
         },
       ]),
-      User.countDocuments().lean(),
-      Order.countDocuments().lean(),
+      User.estimatedDocumentCount().lean(),
+      Order.estimatedDocumentCount().lean(),
     ]);
     
     const totalVideosCount = courseStats[0]?.totalCount || 0;
