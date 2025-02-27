@@ -270,23 +270,23 @@ export async function getAdminAnalytics() {
   try {
     await connectToDatabase();
 
-    const [ orderCount] = await Promise.all([
-    //   Course.estimatedDocumentCount(), // Fast course count without full scan
-    //   Course.aggregate([
-    //     { $group: { _id: null, totalCount: { $sum: "$count" } } }
-    //   ], { allowDiskUse: true, maxTimeMS: 15000 }), // ✅ Correct way to set options
-    //   User.estimatedDocumentCount(), // Faster user count
+    const [totalCourses, totalVideosCount, usersCount, orderCount] = await Promise.all([
+      Course.estimatedDocumentCount(), // Fast course count without full scan
+      Course.aggregate([
+        { $group: { _id: null, totalCount: { $sum: "$count" } } }
+      ], { allowDiskUse: true, maxTimeMS: 15000 }), // ✅ Correct way to set options
+      User.estimatedDocumentCount(), // Faster user count
       Order.estimatedDocumentCount(), // Faster order count
     ]);
     
-    // const totalVideos = totalVideosCount[0]?.totalCount || 0;
+    const totalVideos = totalVideosCount[0]?.totalCount || 0;
     
 
     const tabsData = [
       {
         id: 1,
         title: "Users signed up",
-        count: 0,
+        count: usersCount,
       },
       {
         id: 2,
@@ -296,12 +296,12 @@ export async function getAdminAnalytics() {
       {
         id: 3,
         title: "Courses",
-        count: 0,
+        count: totalCourses,
       },
       {
         id: 4,
         title: "Videos",
-        count: 0,
+        count: totalVideos,
       }
     ];
 
