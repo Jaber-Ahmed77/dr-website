@@ -203,6 +203,8 @@ export async function updateUserData(email, userData) {
 
 export async function getUserAnalytics(id) {
   try {
+    console.time("getUserAnalytics");
+
     const ordersPromise = Order.find(
       { userId: id, status: "completed" },
       "courseId createdAt"
@@ -210,7 +212,12 @@ export async function getUserAnalytics(id) {
       .populate("courseId", "title price thumbnail count")
       .exec();
 
+      console.timeLog("getUserAnalytics", "Orders fetched");
+
+
     const [orders] = await Promise.all([ordersPromise]);
+
+    console.timeLog("getUserAnalytics", "Orders processed");
 
     // Simplify orders to avoid circular references
     const simplifiedOrders = orders.map(order => ({
@@ -223,12 +230,18 @@ export async function getUserAnalytics(id) {
       createdAt: order.createdAt,
     }));
 
+    console.timeLog("getUserAnalytics", "Orders simplified");
+
+
     const ordersCount = simplifiedOrders.length;
 
     const totalVideosCount = simplifiedOrders.reduce((total, order) => {
       const count = order.courseId?.count || 0;
       return total + count;
     }, 0);
+
+    console.timeLog("getUserAnalytics", "Counts calculated");
+
 
     const tabsData = [
       {
@@ -242,6 +255,8 @@ export async function getUserAnalytics(id) {
         count: totalVideosCount,
       },
     ];
+
+    console.timeEnd("getUserAnalytics");
 
     return { orders: simplifiedOrders, tabsData };
   } catch (error) {
