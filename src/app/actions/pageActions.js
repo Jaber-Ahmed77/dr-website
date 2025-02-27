@@ -268,15 +268,16 @@ export async function getUserAnalytics(id) {
 
 export async function getAdminAnalytics() {
   try {
+    await connectToDatabase();
 
-    // const [totalCourses, totalVideosCount, usersCount, orderCount] = await Promise.all([
+    const [ orderCount] = await Promise.all([
     //   Course.estimatedDocumentCount(), // Fast course count without full scan
     //   Course.aggregate([
     //     { $group: { _id: null, totalCount: { $sum: "$count" } } }
     //   ], { allowDiskUse: true, maxTimeMS: 15000 }), // ✅ Correct way to set options
     //   User.estimatedDocumentCount(), // Faster user count
-    //   Order.estimatedDocumentCount(), // Faster order count
-    // ]);
+      Order.estimatedDocumentCount(), // Faster order count
+    ]);
     
     // const totalVideos = totalVideosCount[0]?.totalCount || 0;
     
@@ -290,7 +291,7 @@ export async function getAdminAnalytics() {
       {
         id: 2,
         title: "Courses Enrolled",
-        count: 0,
+        count: orderCount,
       },
       {
         id: 3,
