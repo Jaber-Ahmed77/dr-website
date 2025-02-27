@@ -269,38 +269,38 @@ export async function getUserAnalytics(id) {
 export async function getAdminAnalytics() {
   try {
 
-    const [totalCourses, usersCount, orderCount] = await Promise.all([
-      // Course.estimatedDocumentCount(), // Fast course count without full scan
-      // Course.aggregate([
-      //   { $group: { _id: null, totalCount: { $sum: "$count" } } }
-      // ], { allowDiskUse: true, maxTimeMS: 8000 }), // ✅ Correct way to set options
-      User.countDocuments(), // Faster user count
-      Order.countDocuments(), // Faster order count
-    ]);
+    // const [totalCourses, totalVideosCount, usersCount, orderCount] = await Promise.all([
+    //   Course.estimatedDocumentCount(), // Fast course count without full scan
+    //   Course.aggregate([
+    //     { $group: { _id: null, totalCount: { $sum: "$count" } } }
+    //   ], { allowDiskUse: true, maxTimeMS: 15000 }), // ✅ Correct way to set options
+    //   User.estimatedDocumentCount(), // Faster user count
+    //   Order.estimatedDocumentCount(), // Faster order count
+    // ]);
     
-    const totalVideos =  0;
+    // const totalVideos = totalVideosCount[0]?.totalCount || 0;
     
 
     const tabsData = [
       {
         id: 1,
         title: "Users signed up",
-        count: usersCount,
+        count: 0,
       },
       {
         id: 2,
         title: "Courses Enrolled",
-        count: orderCount,
+        count: 0,
       },
       {
         id: 3,
         title: "Courses",
-        count: totalCourses,
+        count: 0,
       },
       {
         id: 4,
         title: "Videos",
-        count: totalVideos,
+        count: 0,
       }
     ];
 
