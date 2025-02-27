@@ -1,0 +1,8 @@
+{
+    "functions": {
+      "/dashboard/overview": {
+        "maxDuration": 30
+      }
+    }
+  }
+  

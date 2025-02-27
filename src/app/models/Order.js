@@ -7,5 +7,7 @@ const OrderSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now },
   });
   
+  OrderSchema.index({ userId: 1, courseId: 1 });
+
   export default mongoose.models.Order || mongoose.model("Order", OrderSchema);
   

@@ -9,4 +9,6 @@ const CourseSchema = new mongoose.Schema({
   thumbnail: { type: String },
 });
 
+CourseSchema.index({ playlistId: 1 });
+
 export default mongoose.models.Course || mongoose.model("Course", CourseSchema);
