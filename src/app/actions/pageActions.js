@@ -269,16 +269,16 @@ export async function getUserAnalytics(id) {
 export async function getAdminAnalytics() {
   try {
 
-    const [totalCourses, totalVideosCount, usersCount, orderCount] = await Promise.all([
+    const [totalCourses, usersCount, orderCount] = await Promise.all([
       Course.estimatedDocumentCount(), // Fast course count without full scan
-      Course.aggregate([
-        { $group: { _id: null, totalCount: { $sum: "$count" } } }
-      ], { allowDiskUse: true, maxTimeMS: 8000 }), // ✅ Correct way to set options
+      // Course.aggregate([
+      //   { $group: { _id: null, totalCount: { $sum: "$count" } } }
+      // ], { allowDiskUse: true, maxTimeMS: 8000 }), // ✅ Correct way to set options
       User.estimatedDocumentCount(), // Faster user count
       Order.estimatedDocumentCount(), // Faster order count
     ]);
     
-    const totalVideos = totalVideosCount[0]?.totalCount || 0;
+    const totalVideos =  0;
     
 
     const tabsData = [
