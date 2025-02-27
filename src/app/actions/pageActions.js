@@ -274,8 +274,8 @@ export async function getAdminAnalytics() {
       // Course.aggregate([
       //   { $group: { _id: null, totalCount: { $sum: "$count" } } }
       // ], { allowDiskUse: true, maxTimeMS: 8000 }), // ✅ Correct way to set options
-      User.estimatedDocumentCount(), // Faster user count
-      Order.estimatedDocumentCount(), // Faster order count
+      User.countDocuments(), // Faster user count
+      Order.countDocuments(), // Faster order count
     ]);
     
     const totalVideos =  0;
