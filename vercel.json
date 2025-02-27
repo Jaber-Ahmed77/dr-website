@@ -1,8 +1,8 @@
 {
     "functions": {
-      "api/dashboard/overview.js": {
+      "api/**/*.js": {
         "maxDuration": 30
       }
     }
-  }
+}
   
