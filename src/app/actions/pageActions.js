@@ -270,7 +270,7 @@ export async function getAdminAnalytics() {
   try {
 
     const [totalCourses, usersCount, orderCount] = await Promise.all([
-      Course.estimatedDocumentCount(), // Fast course count without full scan
+      // Course.estimatedDocumentCount(), // Fast course count without full scan
       // Course.aggregate([
       //   { $group: { _id: null, totalCount: { $sum: "$count" } } }
       // ], { allowDiskUse: true, maxTimeMS: 8000 }), // ✅ Correct way to set options
