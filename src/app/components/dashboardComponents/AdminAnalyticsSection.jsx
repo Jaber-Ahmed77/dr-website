@@ -2,7 +2,7 @@ import DataCards from "./DataCards";
 
 export default async function AdminAnalyticsSection() {
   try {
-    const response = await fetch("/api/getAdminAnalytics", { cache: "no-store" });
+    const response = await fetch("https://dr-website-kappa.vercel.app/api/getAdminAnalytics", { cache: "no-store" });
     console.log("test");
     if (!response.ok) throw new Error("Failed to fetch analytics data");
     const { tabsData } = await response.json();
