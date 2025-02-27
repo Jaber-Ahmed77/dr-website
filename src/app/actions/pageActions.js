@@ -270,6 +270,7 @@ export async function getAdminAnalytics() {
   try {
     console.time("getUserAnalytics");
 
+    // ✅ Optimize queries by limiting fields & using lean()
     const [courseStats, usersCount, orderCount] = await Promise.all([
       Course.aggregate([
         {
@@ -279,35 +280,37 @@ export async function getAdminAnalytics() {
             totalCourses: { $sum: 1 },
           },
         },
-      ]),
+      ]).exec(), // ⚡ Ensure aggregation execution
       User.countDocuments().lean(),
       Order.countDocuments().lean(),
     ]);
-    
+
+    // ✅ Extract and handle undefined values
     const totalVideosCount = courseStats[0]?.totalCount || 0;
     const totalCourses = courseStats[0]?.totalCourses || 0;
 
+    // ✅ Now we use the real counts in `tabsData`
     const tabsData = [
       {
         id: 1,
         title: "Users signed up",
-        count: 1,
+        count: usersCount,
       },
       {
         id: 2,
         title: "Courses Enrolled",
-        count: 2,
+        count: orderCount,
       },
       {
         id: 3,
         title: "Courses",
-        count: 4,
+        count: totalCourses,
       },
       {
         id: 4,
         title: "Videos",
-        count: 7,
-      }
+        count: totalVideosCount,
+      },
     ];
 
     console.timeEnd("getUserAnalytics");
