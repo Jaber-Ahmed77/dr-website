@@ -8,12 +8,11 @@ export default async function UserAnalyticsSection({ session }) {
   }
 
   try {
-    const response = await fetch(`${process.env.BASE_URL}/api/getUserAnalytics?id=${session.user.id}`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getUserAnalytics?id=${session.user.id}`, {
       cache: "no-store",
     });
 
-    console.log("test");
-
+    
     if (!response.ok) throw new Error("Failed to fetch analytics data");
 
     const data = await response.json();
