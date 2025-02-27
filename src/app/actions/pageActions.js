@@ -5,6 +5,7 @@ import { authOptions } from "../api/auth/[...nextauth]/route";
 import connectToDatabase from "../lib/connectToDb";
 import Course from "../models/Course";
 import clientPromise from "../lib/mongoClient";
+import Order from "../models/Order";
 
 const API_KEY = process.env.YOUTUBE_API_KEY;
 const CHANNEL_ID = process.env.YOUTUBE_CHANNEL_ID;
@@ -197,5 +198,54 @@ export async function updateUserData(email, userData) {
   } catch (error) {
     console.error("Error updating user:", error);
     return { success: false, message: "Database update failed" };
+  }
+}
+
+export async function getUserAnalytics(id) {
+  try {
+    const ordersPromise = Order.find(
+      { userId: id, status: "completed" },
+      "courseId createdAt"
+    )
+      .populate("courseId", "title price thumbnail count")
+      .exec();
+
+    const [orders] = await Promise.all([ordersPromise]);
+
+    // Simplify orders to avoid circular references
+    const simplifiedOrders = orders.map(order => ({
+      courseId: order.courseId ? {
+        title: order.courseId.title,
+        price: order.courseId.price,
+        thumbnail: order.courseId.thumbnail,
+        count: order.courseId.count,
+      } : null,
+      createdAt: order.createdAt,
+    }));
+
+    const ordersCount = simplifiedOrders.length;
+
+    const totalVideosCount = simplifiedOrders.reduce((total, order) => {
+      const count = order.courseId?.count || 0;
+      return total + count;
+    }, 0);
+
+    const tabsData = [
+      {
+        id: 1,
+        title: "Courses Enrolled",
+        count: ordersCount,
+      },
+      {
+        id: 2,
+        title: "Lessons",
+        count: totalVideosCount,
+      },
+    ];
+
+    return { orders: simplifiedOrders, tabsData };
+  } catch (error) {
+    console.error("Error in getUserAnalytics:", error);
+    throw error;
   }
 }

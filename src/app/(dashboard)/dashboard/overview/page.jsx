@@ -9,6 +9,7 @@ import { User } from "@/src/app/models/User";
 import Order from "@/src/app/models/Order";
 import CourseCard from "@/src/app/components/homeComponents/CourseCard";
 import { formatDistanceToNow } from "date-fns";
+import UserAnalyticsSection from "@/src/app/components/dashboardComponents/UserAnalyticsSection";
 
 export default async function Dashboard() {
   const session = await getServerSession(authOptions);
@@ -58,34 +59,6 @@ export default async function Dashboard() {
       }
     );
   } else {
-    const ordersPromise = Order.find(
-      { userId: session?.user?.id, status: "completed" },
-      "courseId createdAt"
-    )
-      .populate("courseId", "title price thumbnail count")
-      .exec();
-    
-    const [orders] = await Promise.all([ordersPromise]);
-    
-    const ordersCount = orders.length;
-    const totalVideosCount = orders.reduce((total, order) => {
-      return total + (order.courseId?.count || 0);
-    }, 0);
-    
-    currentCourses = orders;
-    
-    tabsData.push(
-      {
-        id: 1,
-        title: "Courses Enrolled",
-        count: ordersCount,
-      },
-      {
-        id: 2,
-        title: "Lessons",
-        count: totalVideosCount,
-      }
-    );
 
   }
 
@@ -120,35 +93,8 @@ export default async function Dashboard() {
         </div>
       )}
 
-      <div className="mt-10 grid grid-cols-4 gap-8">
-        {tabsData.map((tab) => (
-          <DataCards key={tab.id} data={tab} />
-        ))}
-      </div>
-      {session?.user?.role === "user" && (
-        <div className="mt-10 bg-white shadow-lg p-8 rounded-xl">
-          <h4 className="text-xl mb-2 font-semibold text-gray-800">
-            our courses
-          </h4>
-          {currentCourses.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-20">
-              {currentCourses?.map((course) => (
-                <CourseCard
-                  key={course?.courseId?._id}
-                  course={course?.courseId}
-                  role={session?.role}
-                  dateDistance={formatDistanceToNow(
-                    new Date(course?.createdAt),
-                    { addSuffix: true }
-                  )}
-                />
-              ))}
-            </div>
-          ) : (
-            <p>No courses found</p>
-          )}
-        </div>
-      )}
+      {/* <UserAnalyticsSection session={session}/> */}
+
     </div>
   );
 }
