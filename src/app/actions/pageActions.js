@@ -270,22 +270,22 @@ export async function getAdminAnalytics() {
   try {
     console.time("getUserAnalytics");
 
-    // const [courseStats, usersCount, orderCount] = await Promise.all([
-    //   Course.aggregate([
-    //     {
-    //       $group: {
-    //         _id: null,
-    //         totalCount: { $sum: "$count" },
-    //         totalCourses: { $sum: 1 },
-    //       },
-    //     },
-    //   ]),
-    //   User.countDocuments().lean(),
-    //   Order.countDocuments().lean(),
-    // ]);
+    const [courseStats, usersCount, orderCount] = await Promise.all([
+      Course.aggregate([
+        {
+          $group: {
+            _id: null,
+            totalCount: { $sum: "$count" },
+            totalCourses: { $sum: 1 },
+          },
+        },
+      ]),
+      User.countDocuments().lean(),
+      Order.countDocuments().lean(),
+    ]);
     
-    // const totalVideosCount = courseStats[0]?.totalCount || 0;
-    // const totalCourses = courseStats[0]?.totalCourses || 0;
+    const totalVideosCount = courseStats[0]?.totalCount || 0;
+    const totalCourses = courseStats[0]?.totalCourses || 0;
 
     const tabsData = [
       {
