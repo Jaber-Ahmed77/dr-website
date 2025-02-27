@@ -6,6 +6,7 @@ import connectToDatabase from "../lib/connectToDb";
 import Course from "../models/Course";
 import clientPromise from "../lib/mongoClient";
 import Order from "../models/Order";
+import { User } from "../models/User";
 
 const API_KEY = process.env.YOUTUBE_API_KEY;
 const CHANNEL_ID = process.env.YOUTUBE_CHANNEL_ID;
@@ -259,6 +260,59 @@ export async function getUserAnalytics(id) {
     console.timeEnd("getUserAnalytics");
 
     return { orders: simplifiedOrders, tabsData };
+  } catch (error) {
+    console.error("Error in getUserAnalytics:", error);
+    throw error;
+  }
+}
+
+export async function getAdminAnalytics() {
+  try {
+    console.time("getUserAnalytics");
+
+    const [courseStats, usersCount, orderCount] = await Promise.all([
+      Course.aggregate([
+        {
+          $group: {
+            _id: null,
+            totalCount: { $sum: "$count" },
+            totalCourses: { $sum: 1 },
+          },
+        },
+      ]),
+      User.countDocuments().lean(),
+      Order.countDocuments().lean(),
+    ]);
+    
+    const totalVideosCount = courseStats[0]?.totalCount || 0;
+    const totalCourses = courseStats[0]?.totalCourses || 0;
+
+    const tabsData = [
+      {
+        id: 1,
+        title: "Users signed up",
+        count: usersCount,
+      },
+      {
+        id: 2,
+        title: "Courses Enrolled",
+        count: orderCount,
+      },
+      {
+        id: 3,
+        title: "Courses",
+        count: totalCourses,
+      },
+      {
+        id: 4,
+        title: "Videos",
+        count: totalVideosCount,
+      }
+    ];
+
+    console.timeEnd("getUserAnalytics");
+
+    return { tabsData };
   } catch (error) {
     console.error("Error in getUserAnalytics:", error);
     throw error;
