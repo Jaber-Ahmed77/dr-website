@@ -1,6 +1,6 @@
 {
     "functions": {
-      "/dashboard/overview": {
+      "api/dashboard/overview.js": {
         "maxDuration": 30
       }
     }
