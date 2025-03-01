@@ -77,6 +77,8 @@ async function getPaymentKey(token, orderId, amount, userData) {
     return { error: "Authentication token, Order ID, or Amount is missing." };
   }
 
+  console.log("📦 userData:", userData);
+
   try {
     const response = await axios.post(PAYMOB_PAYMENT_KEY_URL, {
       auth_token: token,

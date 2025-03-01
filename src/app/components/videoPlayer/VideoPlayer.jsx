@@ -2,7 +2,6 @@ import { useEffect } from "react";
 
 const VideoPlayer = ({ video }) => {
   useEffect(() => {
-    // Prevent right-click
     const disableRightClick = (event) => event.preventDefault();
     document.addEventListener("contextmenu", disableRightClick);
 
@@ -24,12 +23,17 @@ const VideoPlayer = ({ video }) => {
       new YT.Player("youtube-player", {
         videoId: video.snippet.resourceId.videoId,
         playerVars: {
-          modestbranding: 1, // No YouTube logo
-          controls: 0, // Hide play/pause controls
           rel: 0, // No related videos
-          fs: 0, // No fullscreen button
+          modestbranding: 1, // No YouTube branding
           disablekb: 1, // Disable keyboard shortcuts
+          controls: 0, // Hide controls
+          showinfo: 0, // Hide title and info
+          fs: 0, // Disable fullscreen button
+          iv_load_policy: 3, // Disable annotations
+          autoplay: 1, // Auto-play video
+          playsinline: 1, // Prevents opening in YouTube app (mobile)
         },
+
         events: {
           onReady: (event) => event.target.playVideo(),
         },
@@ -47,7 +51,9 @@ const VideoPlayer = ({ video }) => {
           </p>
         </div>
         <div className="relative w-full aspect-video mt-7 p-3 shadow-lg rounded-md bg-white">
+          <div className="absolute top-0 left-0 w-full h-[20%]"></div>
           <div className="w-full h-full rounded-md" id="youtube-player"></div>
+          <div className="absolute bottom-0 right-[7%] w-[6%] h-[9%]"></div>
         </div>
       </>
     ) : null
