@@ -6,7 +6,7 @@ import { FaBook } from "react-icons/fa";
 import UpdateCoursePrice from "../../forms/UpdateCoursePrice";
 
 export default function CourseCard({ course, role, dateDistance }) {
-  console.log("course", course);
+  console.log("course", course  );
   
   return (
     <div className="shadow-lg rounded-2xl hover:shadow-2xl hover:-translate-y-1 transition-all overflow-clip flex flex-col">
@@ -33,7 +33,7 @@ export default function CourseCard({ course, role, dateDistance }) {
           <h4 className="md:text-2xl text-xl font-semibold mb-2">
             {course?.title}
           </h4>
-          <p className="mt-2 text-sm md:text-base text-slate-600 leading-relaxed line-clamp-3">
+          <p className="mt-2 text-sm md:text-base text-slate-600 leading-relaxed break-words line-clamp-3">
             {course?.description}
           </p>
         </div>

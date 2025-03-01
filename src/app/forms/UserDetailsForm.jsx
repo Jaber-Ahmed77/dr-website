@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import validator from "validator";
 import { updateUserData } from "../actions/pageActions";
@@ -7,10 +7,6 @@ import toast from "react-hot-toast";
 
 export const UserDetailsForm = ({ userData, email }) => {
   const [loading, setLoading] = useState(false);
-
-  if(!userData) {
-    toast.error("Thank you for your interest, Please complete your information first.");
-  }
 
   const {
     register,
@@ -31,8 +27,16 @@ export const UserDetailsForm = ({ userData, email }) => {
     },
   });
 
+  useEffect(() => {
+    if (!userData) {
+      toast.error(
+        "Thank you for your interest, Please complete your information first."
+      );
+    }
+  }, [userData]);
+
   const onSubmit = async (data) => {
-    setLoading(true); // Start loading
+    setLoading(true);
 
     const sanitizedData = Object.fromEntries(
       Object.entries(data).map(([key, value]) => [key, validator.escape(value)])
@@ -51,7 +55,7 @@ export const UserDetailsForm = ({ userData, email }) => {
       console.error("Error updating user data:", error);
       toast.error(error.message || "Error updating user data");
     } finally {
-      setLoading(false); // Stop loading
+      setLoading(false);
     }
   };
 

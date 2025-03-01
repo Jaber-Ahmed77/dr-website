@@ -9,6 +9,7 @@ import FormWrapper from "../passwordComponents/FormWrapper";
 import { IoClose, IoMenu } from "react-icons/io5";
 import { FaArrowLeft } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
+import VideoPlayer from "../videoPlayer/VideoPlayer";
 
 export default function ShowCourse({ id, userSession, userData }) {
   const [response, setResponse] = useState();
@@ -262,7 +263,7 @@ export default function ShowCourse({ id, userSession, userData }) {
 
           {Object.keys(video).length ? (
             <>
-              <div className="flex flex-col gap-3">
+              {/* <div className="flex flex-col gap-3">
                 <h2 className="text-lg font font-semibold">
                   {video?.snippet?.title}
                 </h2>
@@ -277,7 +278,8 @@ export default function ShowCourse({ id, userSession, userData }) {
                   title="YouTube Video"
                   allowFullScreen
                 ></iframe>
-              </div>
+              </div> */}
+              <VideoPlayer video={video} />
             </>
           ) : null}
         </div>

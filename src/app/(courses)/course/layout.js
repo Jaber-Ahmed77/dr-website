@@ -1,7 +1,5 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "../../globals.css";
-import { getServerSession } from "next-auth";
-import { authOptions } from "../../api/auth/[...nextauth]/route";
 import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
@@ -20,7 +18,6 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-  const session = await getServerSession(authOptions);
 
   return (
     <html lang="en">

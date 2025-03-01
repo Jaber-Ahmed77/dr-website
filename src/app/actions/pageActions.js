@@ -5,8 +5,6 @@ import { authOptions } from "../api/auth/[...nextauth]/route";
 import connectToDatabase from "../lib/connectToDb";
 import Course from "../models/Course";
 import clientPromise from "../lib/mongoClient";
-import Order from "../models/Order";
-import { User } from "../models/User";
 
 const API_KEY = process.env.YOUTUBE_API_KEY;
 const CHANNEL_ID = process.env.YOUTUBE_CHANNEL_ID;
@@ -52,7 +50,7 @@ export async function updateCourses() {
       
       const totalVideos = response2.data.pageInfo.totalResults;
             
-      if (existingCourse.count !== totalVideos) {
+      if (existingCourse?.count !== totalVideos) {
         await Course.updateOne(
           { playlistId: playlist.id },
           { $set: { count: totalVideos } }
