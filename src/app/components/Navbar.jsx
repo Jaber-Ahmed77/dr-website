@@ -1,6 +1,7 @@
 "use client";
 
 import { signIn, signOut } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { CiMenuBurger } from "react-icons/ci";
@@ -27,9 +28,9 @@ export default function Navbar({ session }) {
         <div
           className={` mx-auto max-w-7xl w-[94%] px-6 md:px-6 py-3 flex items-center justify-between`}
         >
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-8">
             {/* Logo SVG */}
-            <Link href="/">
+            <Link href="/" className="w-12">
               {/* <svg
               width="42"
               height="42"
@@ -81,7 +82,7 @@ export default function Navbar({ session }) {
                 data-v-27e72c32=""
               ></path>
             </svg> */}
-              Logo
+              <Image src="/logo.png" alt="logo" width={100} height={100} />
             </Link>
 
             {/* Links */}
